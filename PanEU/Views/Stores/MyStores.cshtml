@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PanEU.Models.EntityFramework.Store>
+
+@{
+    ViewBag.Title = "MyStores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyStores</h2>
+
+
+<table class="table table-bordered" id="myStoresTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Town)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Town)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myStoresTable').DataTable({
+            "dom": 'frtp'
+        } );
+
+    });
+</script>
+
+

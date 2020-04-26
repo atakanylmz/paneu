@@ -1,0 +1,119 @@
+﻿@model IEnumerable<PanEU.Models.EntityFramework.Store>
+
+@{
+    ViewBag.Title = "UnconfirmedStores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UnconfirmedStores</h2>
+
+<table class="table table-bordered" id="UnConfirmedStoresTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Town)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+
+            <th>
+                Owner FullName
+            </th>
+            <th>
+                Owner Phone
+            </th>
+            <th>
+                Owner Email
+            </th>
+            <th>
+                Confirm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Town)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)&nbsp @Html.DisplayFor(modelItem => item.User.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+
+                <td>
+                    @if (item.IsComfirmed)
+                    {
+                        <a class="btn btn-success btnConfirmStore" data-id="@item.Id">Confirmed</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger btnConfirmStore" data-id="@item.Id">UnConfirmed</a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#UnConfirmedStoresTable').DataTable({
+            "dom": 'frtp'
+        } );
+
+
+        $("#UnConfirmedStoresTable").on("click", ".btnConfirmStore", function () {
+            var id = $(this).data("id");
+            var element = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Stores/ConfirmStore/" + id,
+                success: function (a) {
+                    if (a == "True")
+                    {
+                        element.html("Confirmed");
+                        element.removeClass("btn-danger")
+                        element.addClass("btn-success")
+                    }
+                    else if (a == "False")
+                    {
+                        element.html("Unconfirmed");
+                        element.removeClass("btn-success")
+                        element.addClass("btn-danger")
+                    }
+                }
+            });
+        });
+    });
+
+</script>

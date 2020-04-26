@@ -1,0 +1,82 @@
+﻿@model IEnumerable<PanEU.Models.EntityFramework.Appointment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Appointments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, null, new { @class = "btn btn-success" })
+</p>
+<table class="table table-bordered" id="myAppointmentsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store.Town)
+            </th>
+            <th>
+                Store Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store.Town)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myAppointmentsTable').DataTable({
+            "dom": 'frtp'
+        } );
+
+    });
+</script>
